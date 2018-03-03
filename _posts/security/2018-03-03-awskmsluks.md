@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AWS KMS LUKS Service - Key management for on premise volume encryption"
+title:  "AWS KMS LUKS Service - Key management for on-premise volume encryption"
 date:   2018-03-03 12:00:00 +0000
 categories: security
 tags: aws kms luks
@@ -13,20 +13,24 @@ The AWS KMS LUKS service is designed to secure on-premise storage block devices 
 * Data access by the storage service administrators
 * Physical access to the storage service's infrastructure being used as a means to access the data
 
-It is not intended for AWS KMS LUKS to address the risk of access to a privileged user on the host Linux operating system giving access to the data on the volume.
+It is not intended for AWS KMS LUKS to address the risk of access to the data via a privileged user on the host Linux operating to which the volume is mounted.
 
 LUKS (Linux Unified Key Setup) is the standard for disk encryption on Linux. 
 The challenge with LUKS is the management and security of passphrases used as keys to encrypt the volume.
-AWS KMS LUKS aims to solve this issue by using AWS' KMS to generate and manage keys used as passphrases.
+AWS KMS LUKS aims to solve this issue by using AWS' KMS to generate and manage keys used as LUKS passphrases.
+
+For details on AWS' KMS see: https://aws.amazon.com/kms/
+A knowledge of KMS is required to understand the AWS KMS LUKS service design.
 
 ## Architecture
 The AWS KMS LUKS has a server side component that proxies and secures the interaction with AWS services (KMS and S3).
-The server also implements security checks on requests to access data keys to open encrypted volumes.
+The server also implements security checks on requests to access data keys used to open encrypted volumes.
 A REST API is exposed for creating new data keys and decrypting data keys.
 When data keys are created a backup copy is stored in an S3 bucket to ensure durability of keys.
 If keys are lost from the AWS KMS LUKS clients they can be restored from this bucket.
 
-The client to the server is a single binary that runs on the host which has the volume attached and is used to initialise the encryption of new volumes and decrypt and open volumes.
+The client to the server is a single binary that runs on the host which has the volume attached.
+This is used to initialise the encryption of new volumes and decrypt and open volumes.
 When initialising LUKS volume encryption the client will request a new data key from the server and use this to set up the encryption.
 When openning a volume the client will take the locally stored encrypted data key and request the server to decrypt it.
 The decrypted data key will then be used to open the volume. Systemd is used to call this client on boot to open all encrypted volumes on the host.
@@ -35,10 +39,10 @@ The decrypted data key will then be used to open the volume. Systemd is used to 
 AWS KMS LUKS uses KMS to generate data keys which are used as the passphrases to LUKS volume encryption.
 
 AWS KMS LUKS uses a key structure which includes the following:
-* The reference ARN of the AWS KMS master key used to generate and encrypt the data key.
+* The ARN of the AWS KMS master key used to generate and encrypt the data key.
 * The data key used as the passphrase for LUKS.
   * Plaintext - removed before written to disk or the S3 bucket.
-  * Encrypted - written to disk.
+  * Encrypted - written to disk and S3.
 * The encryption context used with KMS to encrypt the data key.
 * A list of host names which are authorized to decrypt the encrypted form of the data key.
 * A digital signature to ensure the integrity of the key structure.
