@@ -1,12 +1,11 @@
 ---
 layout: post
-title:  "AWS KMS LUKS - Key management for on premise volume encryption"
+title:  "AWS KMS LUKS Service - Key management for on premise volume encryption"
 date:   2018-03-03 12:00:00 +0000
 categories: security
 tags: aws kms luks
 published: true
 ---
-# AWS KMS LUKS Service
 
 ## Use Case
 The AWS KMS LUKS service is designed to secure on-premise storage block devices from the following risks:
