@@ -11,8 +11,8 @@ published: true
 
 - When converting an existing Go library project to use Go modules, release the change as a new major version.
 - Versions greater than v1.x.y need a sub-directory (vX) in your source repo.
-- Remember your import path now has a /vN at the end.
-- GitHub actions can be configured to test just the sub-directory in your repo that has been changed.
+- Remember, if version >= 2, your import path now has a /vN at the end.
+- GitHub actions can be configured to test just the version in your repo that has been changed.
 
 ---
 
