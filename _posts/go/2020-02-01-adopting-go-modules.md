@@ -51,12 +51,12 @@ My next step was to just apply a v2.0.0 tag to my sub-library. Therefore I added
 Go modules on the parent gokrb5 library. However every time I did this my go.mod file kept referring to v1.1.1 of the 
 sub-library rather than v2.0.0. I tried hacking the go.mod to force it to reference v2.0.0 but no luck this resulted in 
 an error message that I didn't really understand. I checked the module proxy for versions available via this link:
-https://proxy.golang.org/github.com/jcmturner/rpc/@v/list At the time no v2.0.0 was listed! I scratched my head about 
+[https://proxy.golang.org/github.com/jcmturner/rpc/@v/list]() At the time no v2.0.0 was listed! I scratched my head about 
 what might be going on. Was this some other caching issue? I decided to wait for a while to see if it would be picked 
 up. _Did this work?_ **No!** 
 
 It turns out that I should read the documentation more closely, specifically this document: 
-https://blog.golang.org/v2-go-modules. Ultimately for versions >=2 there needs to be a versioned sub-directory (eg "v2") 
+[https://blog.golang.org/v2-go-modules](). Ultimately for versions >=2 there needs to be a versioned sub-directory (eg "v2") 
 in the source repo. The reasons for this is that packages with the same import path should be backwards compatible. 
 However if you are changing the major version backwards compatibility is, by definition, not assured. Therefore the 
 best way to change the import path is to add this version sub-directory. 
@@ -76,7 +76,7 @@ it seems this indicates that for a repo tagged with a semantic version one of th
 - There is a /vN directory but it does not contain a go.mod file
 
 So why, when I had sorted both these things, did the modules proxy show a ``+incompatible`` for my library? See:
-https://proxy.golang.org/github.com/jcmturner/rpc/@v/list
+[https://proxy.golang.org/github.com/jcmturner/rpc/@v/list]()
 
 After a while i realised that this was a red herring. The library's import path is _not_ github.com/jcmturner/rpc 
 any more but github.com/jcmturner/rpc/**v2** so if I look this up on the proxy I see the v2.0.2 without 
