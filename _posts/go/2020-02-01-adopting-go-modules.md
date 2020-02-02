@@ -80,7 +80,7 @@ https://proxy.golang.org/github.com/jcmturner/rpc/@v/list
 
 After a while i realised that this was a red herring. The library's import path is _not_ github.com/jcmturner/rpc 
 any more but github.com/jcmturner/rpc/**v2** so if I look this up on the proxy I see the v2.0.2 without 
-``+incompatible``: [https://proxy.golang.org/github.com/jcmturner/rpc/v2/@v/list]
+``+incompatible``: [https://proxy.golang.org/github.com/jcmturner/rpc/v2/@v/list]()
 
 This occurs because a tag applies to the repo not just the v2 sub-directory.
 
@@ -96,8 +96,8 @@ For the [gokrb5](https://github.com/jcmturner/gokrb5) library I was creating a n
 modules. This would reside in a /v8 sub-directory with version 7 continuing to residing in the root of the repo. I 
 therefore implemented two workflows, one for version 7 and one for version 8:
 
-- v7 (in the root of the repo) : [https://github.com/jcmturner/gokrb5/blob/master/.github/workflows/testing.yml]
-- v8 (in a v8 sub-directory) : [https://github.com/jcmturner/gokrb5/blob/master/.github/workflows/testingv8.yml]
+- v7 (in the root of the repo) : [testing.yml](https://github.com/jcmturner/gokrb5/blob/master/.github/workflows/testing.yml)
+- v8 (in a v8 sub-directory) : [testingv8.yml](https://github.com/jcmturner/gokrb5/blob/master/.github/workflows/testingv8.yml)
 
 The key to triggering test on only the version that has been updated in a push was the ``paths`` and ``paths-ignore`` 
 [filters](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths) 
