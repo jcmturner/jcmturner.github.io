@@ -4,7 +4,7 @@ title:  "Adopting Go Modules and integrating with Github Actions"
 date:   2020-02-01 20:00:00 +0000
 categories: go
 tags: modules github
-published: false
+published: true
 ---
 
 ## TL;DR
