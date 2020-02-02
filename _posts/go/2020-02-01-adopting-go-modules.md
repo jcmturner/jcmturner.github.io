@@ -56,7 +56,7 @@ what might be going on. Was this some other caching issue? I decided to wait for
 up. _Did this work?_ **No!** 
 
 It turns out that I should read the documentation more closely, specifically this document: 
-[https://blog.golang.org/v2-go-modules](https://blog.golang.org/v2-go-module). Ultimately for versions >=2 there needs to be a versioned sub-directory (eg "v2") 
+[https://blog.golang.org/v2-go-modules](https://blog.golang.org/v2-go-modules). Ultimately for versions >=2 there needs to be a versioned sub-directory (eg "v2") 
 in the source repo. The reasons for this is that packages with the same import path should be backwards compatible. 
 However if you are changing the major version backwards compatibility is, by definition, not assured. Therefore the 
 best way to change the import path is to add this version sub-directory. 
